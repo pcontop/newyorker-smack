@@ -1,0 +1,17 @@
+#create non root user.
+adduser brewer
+passwd brewer
+usermod -aG wheel brewer
+su brew
+cd ~
+
+#Install brew
+git clone https://github.com/Homebrew/brew ~/.linuxbrew/Homebrew
+mkdir ~/.linuxbrew/bin
+ln -s ../Homebrew/bin/brew ~/.linuxbrew/bin
+eval $(~/.linuxbrew/bin/brew shellenv)
+
+#Install minidcos
+brew install python
+brew postinstall python
+brew install https://raw.githubusercontent.com/dcos/dcos-e2e/master/minidcos.rb
