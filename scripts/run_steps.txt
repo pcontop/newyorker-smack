@@ -1,0 +1,3 @@
+spark_machine=$(docker ps | grep 'spark-cli' | grep -o '[^ ]*spark-solo[^ ]*')
+#test: docker cp docker-compose.yml $spark_machine:/
+

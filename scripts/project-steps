@@ -1,0 +1,19 @@
+## Docker
+
+# Have docker installed (see steps in docker-steps.txt)
+
+
+## Docker Machine
+
+# Have docker machine installed (see steps in docker-machine.txt)
+
+
+## Docker swarm
+
+# Copy docker-compose.yml to a dir.
+# Deploy the docker swarm:
+
+docker swarm init
+
+docker stack deploy -c docker-compose.yml nylab
+
