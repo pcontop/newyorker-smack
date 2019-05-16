@@ -1,0 +1,43 @@
+### Docker machine
+ 
+##Install Virtualbox
+ 
+base=https://github.com/docker/machine/releases/download/v0.16.0 &&
+  curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine &&
+  sudo install /tmp/docker-machine /usr/local/bin/docker-machine
+
+## Install Virtual box
+
+#Add the following line to your /etc/apt/sources.list. According to your distribution, replace '<mydist>' with 'artful', 'zesty', 'yakkety', 'xenial', 'trusty', 'stretch', 'jessie', or 'wheezy' (older versions of VirtualBox supported different distributions):
+
+deb https://download.virtualbox.org/virtualbox/debian xenial contrib
+
+wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
+wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
+
+sudo apt-get update
+
+sudo apt-get install virtualbox-6.0
+  
+## Prepare Swarm
+
+docker-machine create --driver virtualbox myvm1
+docker-machine create --driver virtualbox myvm2
+
+# Note the machine ips:
+
+docker-machine ls
+
+# myvm1   -        virtualbox   Running   tcp://192.168.99.100:2376           v18.09.6   
+# myvm2   -        virtualbox   Running   tcp://192.168.99.101:2376           v18.09.6   
+
+docker-machine ssh myvm1 "docker swarm init --advertise-addr 192.168.99.100"
+
+# Check readiness. Must be with an asterisk:
+
+docker swarm init --advertise-addr 192.168.59.132
+
+docker-machine ssh myvm1 "docker node ls"
+
+
+docker stack deploy -c docker-compose.yml nylab

@@ -1,17 +1,36 @@
-#create non root user.
-adduser brewer
-passwd brewer
-usermod -aG wheel brewer
-su brew
-cd ~
+### Install minidcos With Linux package
 
-#Install brew
-git clone https://github.com/Homebrew/brew ~/.linuxbrew/Homebrew
-mkdir ~/.linuxbrew/bin
-ln -s ../Homebrew/bin/brew ~/.linuxbrew/bin
-eval $(~/.linuxbrew/bin/brew shellenv)
+su - user
 
-#Install minidcos
-brew install python
-brew postinstall python
-brew install https://raw.githubusercontent.com/dcos/dcos-e2e/master/minidcos.rb
+sudo curl --fail -L https://github.com/dcos/dcos-e2e/releases/download/2019.05.03.0/minidcos -o /usr/local/bin/minidcos && \
+sudo chmod +x /usr/local/bin/minidcos
+
+### Grub adjust
+
+#Change GRUB_CMDLINE_LINUX_DEFAULT in /etc/default/grub so that it looks like this:
+
+GRUB_CMDLINE_LINUX_DEFAULT="quiet systemd.legacy_systemd_cgroup_controller=yes"
+quiet is from default Debian grub install.
+
+#Then update grub and reboot:
+sudo update-grub
+sudo reboot
+
+
+### minidocs commands
+minidcos docker doctor
+
+minidcos docker download-installer
+
+minidcos docker create ./dcos_generate_config.sh --agents 1 -c nyorker
+#default
+minidcos docker wait --cluster-id nyorker
+
+#Get into a node.
+minidcos docker run bash --cluster-id nyorker 
+[master-0]# exit
+
+#web interface
+minidcos docker web --cluster-id nyorker 
+
+minidcos docker destroy --cluster-id nyorker 

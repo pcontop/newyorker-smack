@@ -1,12 +1,13 @@
-import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream
-import org.apache.commons.compress.archivers.tar.TarArchiveInputStream
-import org.apache.spark.input.PortableDataStream
+package pcontop.ny.lab.reader
 
-import scala.util.Try
 import java.nio.charset._
 
 import argonaut.Parse
+import org.apache.commons.compress.archivers.tar.TarArchiveInputStream
 import org.apache.spark.SparkContext
+import org.apache.spark.input.PortableDataStream
+
+import scala.util.Try
 
 object Reader {
   def extractFiles(ps: PortableDataStream, n: Int = 1024) = Try {
