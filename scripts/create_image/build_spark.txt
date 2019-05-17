@@ -1,0 +1,6 @@
+docker build --tag spark-cli .
+docker login
+docker images
+#get image id for spark-cli
+docker tag <id> pcontop/spark-cli:first
+docker push pcontop/spark-cli

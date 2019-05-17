@@ -2,7 +2,9 @@ package pcontop.ny.lab.reader
 
 import java.nio.charset._
 
-import argonaut.Parse
+import pcontop.ny.lab.model.Yelp._
+import argonaut._
+import Argonaut._
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream
 import org.apache.spark.SparkContext
 import org.apache.spark.input.PortableDataStream
@@ -40,10 +42,24 @@ object Reader {
 
     val sc = new SparkContext()
 
-    val filesAsText = sc.binaryFiles(pathToFile).flatMapValues(x =>
+    println(s"Initializing processing of directory $pathToFile.")
+
+    val files = sc.binaryFiles(pathToFile)
+
+    println(s"Files found: ${files.count()}")
+
+    val filesAsText = files.
+      flatMapValues(x =>
       extractFiles(x).toOption).mapValues(_.map(decode())).flatMap(_._2)
+
+    println(s"Files processed: ${filesAsText.count()}")
     //No error treatment for now.
-    val filesAsJson = filesAsText.map(Parse.parseOption(_)).filter(_.nonEmpty)
+    val filesAsJson = filesAsText.map(_.decodeOption[Yelp]).filter(_.nonEmpty)
+
+    println("Processed Quantity:")
+    println(filesAsJson.count())
+
+    println("Finished processing.")
 
 
   }

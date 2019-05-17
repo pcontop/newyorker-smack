@@ -35,9 +35,4 @@ docker-machine ssh myvm1 "docker swarm init --advertise-addr 192.168.99.100"
 
 # Check readiness. Must be with an asterisk:
 
-docker swarm init --advertise-addr 192.168.59.132
-
 docker-machine ssh myvm1 "docker node ls"
-
-
-docker stack deploy -c docker-compose.yml nylab

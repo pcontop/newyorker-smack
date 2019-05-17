@@ -1,3 +1,16 @@
 spark_machine=$(docker ps | grep 'spark-cli' | grep -o '[^ ]*spark-solo[^ ]*')
 #test: docker cp docker-compose.yml $spark_machine:/
 
+docker exec -it $spark_machine mkdir datafiles
+docker cp yelp_dataset.tar $spark_machine:/datafiles
+
+docker cp NewYorker-assembly-0.2.jar $spark_machine:/
+
+
+#Base Test
+docker exec -it $spark_machine spark-submit --class pcontop.ny.lab.reader.TestRun /NewYorker-assembly-0.2.jar
+
+docker exec -it $spark_machine spark-submit --class pcontop.ny.lab.reader.Reader /NewYorker-assembly-0.2.jar /datafiles
+
+
+
