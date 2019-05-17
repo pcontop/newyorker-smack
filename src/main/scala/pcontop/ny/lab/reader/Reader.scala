@@ -6,14 +6,16 @@ import pcontop.ny.lab.model.Yelp._
 import argonaut._
 import Argonaut._
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream
+import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream
 import org.apache.spark.SparkContext
 import org.apache.spark.input.PortableDataStream
+import org.apache.spark.rdd.RDD
 
 import scala.util.Try
 
 object Reader {
   def extractFiles(ps: PortableDataStream, n: Int = 1024) = Try {
-    val tar = new TarArchiveInputStream(ps.open)
+    val tar = new TarArchiveInputStream(new GzipCompressorInputStream(ps.open))
     Stream.continually(Option(tar.getNextTarEntry))
       // Read until next exntry is null
       .takeWhile(_.isDefined)
@@ -54,14 +56,29 @@ object Reader {
 
     println(s"Files processed: ${filesAsText.count()}")
     //No error treatment for now.
-    val filesAsJson = filesAsText.map(_.decodeOption[Yelp]).filter(_.nonEmpty)
+    val jsonEntries = filesAsText.flatMap(_.split("\n"))
 
-    println("Processed Quantity:")
-    println(filesAsJson.count())
+    //checkSomeJsons(jsonEntries)
+
+    val yelps = jsonEntries.map(_.decodeOption[Yelp]).filter(_.nonEmpty)
+
+    checkSomeYelps(yelps)
 
     println("Finished processing.")
 
+  }
 
+  def checkSomeYelps(filesStream:RDD[Option[Yelp]]): Unit ={
+    val sample = filesStream.take(10)
+    println("**** Sample Yelps:")
+    sample.foreach(println)
+    println(s"Non-empty from sample: ${sample.count(_.nonEmpty)}")
+  }
+
+  def checkSomeJsons(jsons:RDD[String]):Unit = {
+    val sample = jsons.take(10)
+    println("**** Sample Jsons:")
+    sample.foreach(println)
   }
 
 }

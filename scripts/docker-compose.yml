@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   spark-solo:
-    image: pcontop/spark-cli
+    image: pcontop/spark-cli:first
     command: tail -F anything
     networks:
       - webnet
