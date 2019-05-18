@@ -10,6 +10,9 @@ import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream
 import org.apache.spark.SparkContext
 import org.apache.spark.input.PortableDataStream
 import org.apache.spark.rdd.RDD
+import pcontop.ny.lab.util.CaseClassUtil
+import com.datastax.spark.connector._
+
 
 import scala.util.Try
 
@@ -63,6 +66,14 @@ object Reader {
     val yelps = jsonEntries.map(_.decodeOption[Yelp]).filter(_.nonEmpty)
 
     checkSomeYelps(yelps)
+
+    val valuesRDD = yelps.map(yelp => CaseClassUtil.ccToMap(yelp).toList)
+
+    valuesRDD.saveAsCassandraTable(
+      "run_test",
+      "yelp",
+      SomeColumns(yelpColumns.map(ColumnName(_)): _*)
+    )
 
     println("Finished processing.")
 

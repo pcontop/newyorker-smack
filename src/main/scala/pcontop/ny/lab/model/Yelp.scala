@@ -1,7 +1,7 @@
 package pcontop.ny.lab.model
 
+import argonaut.Argonaut._
 import argonaut._
-import Argonaut._
 
 
 object Yelp {
@@ -40,5 +40,9 @@ object Yelp {
       "categories",
       "hours"
     )
+
+
+  val yelpColumns:Array[String] = classOf[Yelp].getFields.map(_.getName)
+
 }
 
