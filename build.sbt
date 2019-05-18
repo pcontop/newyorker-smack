@@ -26,7 +26,6 @@ libraryDependencies += "io.argonaut" %% "argonaut" % "6.2.2"
 //Test
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.0" % "test"
 
-
 //Assembly
 resolvers += "Artima Maven Repository" at "http://repo.artima.com/releases"
 assemblyOption in assembly := (assemblyOption in assembly).value.copy(includeScala = false)

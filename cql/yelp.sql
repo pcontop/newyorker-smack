@@ -4,6 +4,7 @@ CREATE KEYSPACE if not exists run_test
    'replication_factor' : 1
   };
 
+
 create table if not exists run_test.yelp
 (
    business_id text primary key,

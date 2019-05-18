@@ -2,17 +2,14 @@ package pcontop.ny.lab.reader
 
 import java.nio.charset._
 
-import pcontop.ny.lab.model.Yelp._
-import argonaut._
-import Argonaut._
+import argonaut.Argonaut._
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream
 import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream
-import org.apache.spark.SparkContext
+import org.apache.spark.SparkConf
 import org.apache.spark.input.PortableDataStream
 import org.apache.spark.rdd.RDD
-import pcontop.ny.lab.util.CaseClassUtil
-import com.datastax.spark.connector._
-
+import org.apache.spark.sql.SparkSession
+import pcontop.ny.lab.model.Yelp._
 
 import scala.util.Try
 
@@ -44,8 +41,12 @@ object Reader {
 
   def main(args: Array[String]): Unit = {
     val pathToFile = args(0)
+    val cassandraDNS = args(1)
+    val conf = new SparkConf(true)
+      .set("spark.cassandra.connection.host", cassandraDNS)
 
-    val sc = new SparkContext()
+    val spark = SparkSession.builder().config(conf).getOrCreate()
+    val sc = spark.sparkContext
 
     println(s"Initializing processing of directory $pathToFile.")
 
@@ -61,34 +62,32 @@ object Reader {
     //No error treatment for now.
     val jsonEntries = filesAsText.flatMap(_.split("\n"))
 
-    //checkSomeJsons(jsonEntries)
+    //checkSome(jsonEntries)
 
-    val yelps = jsonEntries.map(_.decodeOption[Yelp]).filter(_.nonEmpty)
+    val yelps = jsonEntries.map(_.decodeOption[Yelp]).filter(_.nonEmpty).map(_.get)
 
-    checkSomeYelps(yelps)
+    //checkSome(yelps)
 
-    val valuesRDD = yelps.map(yelp => CaseClassUtil.ccToMap(yelp).toList)
+    val valuesRDD = yelps.map(yelpValues)
 
-    valuesRDD.saveAsCassandraTable(
-      "run_test",
-      "yelp",
-      SomeColumns(yelpColumns.map(ColumnName(_)): _*)
-    )
+    //checkSome(valuesRDD)
+
+    import spark.implicits._
+    val yelpDF = valuesRDD.toDF(yelpColumns:_*)
+
+    yelpDF.write
+      .mode("append")
+      .format("org.apache.spark.sql.cassandra")
+      .options(Map( "table" -> "yelp", "keyspace" -> "run_test"))
+      .save()
 
     println("Finished processing.")
 
   }
 
-  def checkSomeYelps(filesStream:RDD[Option[Yelp]]): Unit ={
-    val sample = filesStream.take(10)
-    println("**** Sample Yelps:")
-    sample.foreach(println)
-    println(s"Non-empty from sample: ${sample.count(_.nonEmpty)}")
-  }
-
-  def checkSomeJsons(jsons:RDD[String]):Unit = {
+  def checkSome(jsons:RDD[_]):Unit = {
     val sample = jsons.take(10)
-    println("**** Sample Jsons:")
+    println("**** Sample:")
     sample.foreach(println)
   }
 
