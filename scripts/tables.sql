@@ -54,3 +54,28 @@ create table if not exists run_test.review
    date text
 );
 
+create table if not exists run_test.user
+(
+    user_id text primary key,
+    name text,
+    review_count int,
+    yelping_since text,
+    useful int,
+    funny int,
+    cool int,
+    elite text,
+    friends text,
+    fans int,
+    average_stars decimal,
+    compliment_hot int,
+    compliment_more int,
+    compliment_profile int,
+    compliment_cute int,
+    compliment_list int,
+    compliment_note int,
+    compliment_plain int,
+    compliment_cool int,
+    compliment_funny int,
+    compliment_writer int,
+    compliment_photos int
+);
