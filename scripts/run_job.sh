@@ -12,6 +12,7 @@ function clear_destination() {
 }
 
 function send_file() {
+	echo Extracting and sending file...
 	tmp_file=$1
 	rm -rf $tmp_dir 2>/dev/null
 	mkdir $tmp_dir
@@ -21,6 +22,7 @@ function send_file() {
 }
 
 function exec_spark(){
+	echo Processing the file...
 	class=$1
 	docker exec -it \
 	$spark_machine spark-submit \
@@ -45,8 +47,15 @@ docker cp $process_jar $spark_machine:/
 #send_file tip.json
 #exec_spark pcontop.ny.lab.reader.TipReader
 
-clear_destination
-send_file checkin.json
-exec_spark pcontop.ny.lab.reader.CheckinReader
+#clear_destination
+#send_file checkin.json
+#exec_spark pcontop.ny.lab.reader.CheckinReader
 
+#clear_destination
+#send_file review.json
+#exec_spark pcontop.ny.lab.reader.ReviewReader
+
+clear_destination
+send_file user.json
+exec_spark pcontop.ny.lab.reader.UserReader
 
