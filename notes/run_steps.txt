@@ -8,6 +8,7 @@ docker exec -it $spark_machine mkdir datafiles_t
 #small file (head from main)
 docker cp small_dataset.tar.gz $spark_machine:/datafiles_t
 
+#full file
 docker cp yelp_dataset.tar $spark_machine:/datafiles
 
 cassandra_machine=$(docker ps | grep 'cassandra' | grep -o '[^ ]*cassandra[^ ]*'|tail -1)
@@ -22,7 +23,12 @@ docker exec -it $spark_machine spark-submit --class pcontop.ny.lab.reader.TestRu
 docker exec -it $spark_machine spark-submit --class pcontop.ny.lab.reader.Reader /$process_jar /datafiles_t $cassandra_machine
 
 #Run Big
-docker exec -it $spark_machine spark-submit --class pcontop.ny.lab.reader.Reader /$process_jar /datafiles
+docker exec -it \
+$spark_machine spark-submit \
+--class pcontop.ny.lab.reader.Reader \
+--executor-memory 3g \
+--num-executors 2 \
+/$process_jar /datafiles $cassandra_machine
 
 
 
