@@ -2,6 +2,7 @@ package pcontop.ny.lab.model
 
 import argonaut.Argonaut._
 import argonaut._
+
 case class Business(
                          business_id: String,
                          name: String,

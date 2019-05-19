@@ -1,7 +1,7 @@
 package pcontop.ny.lab.model
 
-import argonaut.Argonaut.jdecode9L
-import argonaut.DecodeJson
+import argonaut.Argonaut._
+import argonaut._
 
 case class Review(
                    review_id: String,

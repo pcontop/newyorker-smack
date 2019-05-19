@@ -5,6 +5,10 @@ import org.apache.spark.{SparkConf, SparkContext}
 import com.datastax.spark.connector._
 
 
+/**
+  * Test to check the cassandra integration.
+  * @author pcontop
+  */
 object TestCassandra {
 
   def main(args: Array[String]): Unit = {

@@ -1,7 +1,7 @@
 package pcontop.ny.lab.model
 
-import argonaut.Argonaut.jdecode2L
-import argonaut.DecodeJson
+import argonaut.Argonaut._
+import argonaut._
 
 case class Checkin(
                   business_id:String,

@@ -1,7 +1,7 @@
 package pcontop.ny.lab.model
 
-import argonaut.Argonaut.jdecode5L
-import argonaut.DecodeJson
+import argonaut.Argonaut._
+import argonaut._
 
 case class Tip(
                   user_id:String,

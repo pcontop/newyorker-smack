@@ -1,4 +1,7 @@
 version: "3.7"
+networks:
+  webnet:
+
 services:
   spark-solo:
     image: pcontop/spark-cli:first
@@ -10,7 +13,6 @@ services:
     image: cassandra:3.0
     ports:
       - "9160:9160"
-      - "9042:9042"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
     deploy:
@@ -19,5 +21,5 @@ services:
     networks:
       - webnet
 
-networks:
-  webnet:
+
+
