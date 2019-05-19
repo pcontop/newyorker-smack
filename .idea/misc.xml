@@ -3,6 +3,7 @@
   <component name="ProjectPlainTextFileTypeManager">
     <file url="file://$PROJECT_DIR$/src/test/resources/json/checkin/checkins1.json" />
     <file url="file://$PROJECT_DIR$/src/test/resources/json/photo/photos1.json" />
+    <file url="file://$PROJECT_DIR$/src/test/resources/json/review/reviews1.json" />
     <file url="file://$PROJECT_DIR$/src/test/resources/json/tip/tips1.json" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK" />

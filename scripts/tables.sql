@@ -41,3 +41,16 @@ create table if not exists run_test.checkin
     primary key (business_id)
 );
 
+create table if not exists run_test.review
+(
+   review_id text primary key,
+   user_id text,
+   business_id text,
+   stars decimal,
+   useful int,
+   funny int,
+   cool int,
+   text text,
+   date text
+);
+
