@@ -2,7 +2,7 @@ package pcontop.ny.lab.model
 
 
 import org.scalatest.FunSuite
-import pcontop.ny.lab.model.Business._
+import pcontop.ny.lab.model.BusinessJson._
 import argonaut._
 import Argonaut._
 import pcontop.ny.lab.TestUtil._
@@ -10,10 +10,10 @@ import pcontop.ny.lab.TestUtil._
 
 class BusinessSuite extends FunSuite{
 
-  def getYelp(file:String): Option[Business]  =
+  def getYelp(file:String): Option[BusinessJson]  =
   {
     val json = fileSource(file).mkString
-    val yelp = json.decodeOption[Business]
+    val yelp = json.decodeOption[BusinessJson]
     assert(yelp!=null)
     assert(yelp.nonEmpty)
     yelp

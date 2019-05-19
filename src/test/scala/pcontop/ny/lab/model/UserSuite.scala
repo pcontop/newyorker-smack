@@ -7,11 +7,11 @@ import pcontop.ny.lab.TestUtil._
 
 class UserSuite extends FunSuite{
 
-  def getYelps(file:String): Seq[Option[User]]  =
+  def getYelps(file:String): Seq[Option[UserJson]]  =
   {
     val jsons = fileSource(file).getLines()
     jsons.map (json => {
-      val yelp = json.decodeOption[User]
+      val yelp = json.decodeOption[UserJson]
       assert(yelp != null)
       assert(yelp.nonEmpty)
       yelp

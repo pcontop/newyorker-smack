@@ -3,13 +3,13 @@ package pcontop.ny.lab.reader
 import argonaut.Argonaut._
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.{DataFrame, SparkSession}
-import pcontop.ny.lab.model.Tip
+import pcontop.ny.lab.model.{Tip, TipJson}
 
 object TipReader extends YelpReader[Tip] {
 
   override def decodeOptionFromJson(entry: String): Option[Tip] = {
-    import pcontop.ny.lab.model.Tip._
-    entry.decodeOption[Tip]
+    import pcontop.ny.lab.model.TipJson._
+    toTip(entry.decodeOption[TipJson])
   }
 
   override def buildDF(rdd: RDD[Option[Tip]], spark: SparkSession): DataFrame = {

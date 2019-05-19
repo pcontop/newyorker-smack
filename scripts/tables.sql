@@ -12,7 +12,7 @@ create table if not exists run_test.business
    review_count int,
    is_open int,
    attributes map<text, text>,
-   categories text,
+   categories list<text>,
    hours map<text,text>
 );
 
@@ -29,7 +29,7 @@ create table if not exists run_test.tip
     user_id text,
     business_id text,
     text text,
-    date text,
+    date timestamp,
     compliment_count int,
     primary key (user_id, business_id, date)
 );
@@ -37,7 +37,7 @@ create table if not exists run_test.tip
 create table if not exists run_test.checkin
 (
     business_id text,
-    date text,
+    date list<timestamp>,
     primary key (business_id)
 );
 
@@ -51,7 +51,7 @@ create table if not exists run_test.review
    funny int,
    cool int,
    text text,
-   date text
+   date timestamp
 );
 
 create table if not exists run_test.user
@@ -64,7 +64,7 @@ create table if not exists run_test.user
     funny int,
     cool int,
     elite text,
-    friends text,
+    friends list<text>,
     fans int,
     average_stars decimal,
     compliment_hot int,
