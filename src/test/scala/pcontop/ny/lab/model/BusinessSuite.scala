@@ -8,19 +8,19 @@ import Argonaut._
 import pcontop.ny.lab.TestUtil._
 
 
-class DataSuite extends FunSuite{
+class BusinessSuite extends FunSuite{
 
-  def getYelp(file:String): Option[BusinessData]  =
+  def getYelp(file:String): Option[Business]  =
   {
     val json = fileSource(file).mkString
-    val yelp = json.decodeOption[BusinessData]
+    val yelp = json.decodeOption[Business]
     assert(yelp!=null)
     assert(yelp.nonEmpty)
     yelp
   }
 
   test ("parse json 0") {
-    val yelp = getYelp("/json/yelp0.json")
+    val yelp = getYelp("/json/business/business0.json")
 
     assert(yelp.get.business_id=="xvX2CttrVhyG2z1dFg_0xw")
     assert(yelp.get.latitude==33.4556129678)
@@ -31,7 +31,7 @@ class DataSuite extends FunSuite{
   }
 
   test ("parse json 1") {
-    val yelp = getYelp("/json/yelp1.json")
+    val yelp = getYelp("/json/business/business1.json")
 
     assert(yelp.get.business_id=="xvX2CttrVhyG2z1dFg_0xw")
     assert(yelp.get.latitude==33.4556129678)
@@ -42,7 +42,7 @@ class DataSuite extends FunSuite{
   }
 
   test ("parse json 2") {
-    val yelp = getYelp("/json/yelp2.json")
+    val yelp = getYelp("/json/business/business2.json")
 
     assert(yelp.get.business_id=="HhyxOkGAM07SRYtlQ4wMFQ")
     assert(yelp.get.latitude==35.1900119)

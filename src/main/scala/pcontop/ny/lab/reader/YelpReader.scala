@@ -48,6 +48,7 @@ abstract class YelpReader[T <: YelpContainer] extends Serializable {
     println("**** Sample:")
     sample.foreach(println)
   }
+
   def buildDF (rdd:RDD[Option[T]], spark:SparkSession):DataFrame
 
 }

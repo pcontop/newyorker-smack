@@ -2,8 +2,7 @@ package pcontop.ny.lab.model
 
 import argonaut.Argonaut._
 import argonaut._
-import org.apache.spark.sql.types.{DoubleType, IntegerType, MapType, StringType, StructField, StructType}
-case class BusinessData(
+case class Business(
                          business_id: String,
                          name: String,
                          address: String,
@@ -18,35 +17,12 @@ case class BusinessData(
                          attributes: Option[Map[String, String]],
                          categories: String,
                          hours: Option[Map[String,String]]
-                       )
-
-class Business(val businessData:BusinessData) extends YelpContainer {
-
-  override def values: Seq[Any] = {
-    Seq (
-      businessData.business_id,
-      businessData.name,
-      businessData.address,
-      businessData.city,
-      businessData.state,
-      businessData.postal_code,
-      businessData.latitude,
-      businessData.longitude,
-      businessData.stars,
-      businessData.review_count,
-      businessData.is_open,
-      businessData.attributes.orNull,
-      businessData.categories,
-      businessData.hours.orNull
-    )
-  }
-
-}
+                       ) extends YelpContainer
 
 object Business {
 
-  implicit def BusinessCodecJson: DecodeJson[BusinessData] =
-    jdecode14L(BusinessData.apply)(
+  implicit def BusinessCodecJson: DecodeJson[Business] =
+    jdecode14L(Business.apply)(
       "business_id",
       "name",
       "address",
@@ -62,7 +38,4 @@ object Business {
       "categories",
       "hours"
     )
-
-  def apply(b:BusinessData) = new Business(b)
-
 }

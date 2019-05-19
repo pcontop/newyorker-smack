@@ -15,3 +15,11 @@ create table if not exists run_test.business
    categories text,
    hours map<text,text>
 );
+
+create table if not exists run_test.photo
+(
+    caption text,
+    photo_id text primary key,
+    business_id text,
+    label text
+);
