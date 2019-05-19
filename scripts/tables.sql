@@ -23,3 +23,14 @@ create table if not exists run_test.photo
     business_id text,
     label text
 );
+
+create table if not exists run_test.tip
+(
+    user_id text,
+    business_id text,
+    text text,
+    date text,
+    compliment_count int,
+    primary key (user_id, business_id, date)
+);
+

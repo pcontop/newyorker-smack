@@ -3,16 +3,15 @@ package pcontop.ny.lab.model
 import argonaut.Argonaut._
 import org.scalatest.FunSuite
 import pcontop.ny.lab.TestUtil._
-import pcontop.ny.lab.model.Photo._
 
 
-class PhotoSuite extends FunSuite{
+class TipSuite extends FunSuite{
 
-  def getPhotos(file:String): Seq[Option[Photo]]  =
+  def getTips(file:String): Seq[Option[Tip]]  =
   {
     val jsons = fileSource(file).getLines()
     jsons.map (json => {
-      val yelp = json.decodeOption[Photo]
+      val yelp = json.decodeOption[Tip]
       assert(yelp != null)
       assert(yelp.nonEmpty)
       yelp
@@ -21,8 +20,7 @@ class PhotoSuite extends FunSuite{
   }
 
   test ("parse jsons") {
-    val yelp = getPhotos("/json/photo/photos1.json")
-
+    val yelp = getTips("/json/tip/tips1.json")
   }
 
 }
