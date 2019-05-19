@@ -34,3 +34,10 @@ create table if not exists run_test.tip
     primary key (user_id, business_id, date)
 );
 
+create table if not exists run_test.checkin
+(
+    business_id text,
+    date text,
+    primary key (business_id)
+);
+

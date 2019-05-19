@@ -13,7 +13,7 @@ case class Tip(
 
 object Tip {
 
-  implicit def PhotoCodecJson: DecodeJson[Tip] =
+  implicit def CodecJson: DecodeJson[Tip] =
     jdecode5L(Tip.apply)(
       "user_id",
       "business_id",

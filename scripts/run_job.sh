@@ -28,16 +28,25 @@ function exec_spark(){
 	--executor-memory 6g \
 	--num-executors 1 \
 	/$process_jar /datafiles $cassandra_machine
-
-	clear_destination
 }
 	
 #Send jar
 docker cp $process_jar $spark_machine:/
 
-clear_destination
-send_file business.json
-exec_spark pcontop.ny.lab.reader.BusinessReader
+#clear_destination
+#send_file business.json
+#exec_spark pcontop.ny.lab.reader.BusinessReader
 
+#clear_destination
+#send_file photo.json
+#exec_spark pcontop.ny.lab.reader.PhotoReader
+
+#clear_destination
+#send_file tip.json
+#exec_spark pcontop.ny.lab.reader.TipReader
+
+clear_destination
+send_file checkin.json
+exec_spark pcontop.ny.lab.reader.CheckinReader
 
 
