@@ -33,7 +33,7 @@ case class Business (
                       review_count: Int,
                       is_open: Int,
                       attributes: Option[Map[String, String]],
-                      categories: Option[List[String]],
+                      categories: List[String],
                       hours: Option[Map[String,String]]
                     ) extends YelpContainer
 
@@ -76,7 +76,7 @@ object BusinessJson {
         businessJson.review_count,
         businessJson.is_open,
         businessJson.attributes,
-        toListStringOption(businessJson.categories),
+        toListString(businessJson.categories),
         businessJson.hours
       )
       )

@@ -12,7 +12,7 @@ case class CheckinJson(
 
 case class Checkin(
                     business_id:String,
-                    date: Option[List[Timestamp]]
+                    date: List[Timestamp]
                   ) extends YelpContainer
 
 object CheckinJson {
@@ -32,7 +32,7 @@ object CheckinJson {
       val checkinJson = checkinJsonOpt.get
       Some(Checkin(
         checkinJson.business_id,
-        toListTimestampOption(checkinJson.date)
+        toListTimestamp(checkinJson.date)
       ))
     }
   }

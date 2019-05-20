@@ -35,25 +35,25 @@ function exec_spark(){
 #Send jar
 docker cp $process_jar $spark_machine:/
 
-#clear_destination
-#send_file business.json
-#exec_spark pcontop.ny.lab.reader.BusinessReader
+clear_destination
+send_file business.json
+exec_spark pcontop.ny.lab.reader.BusinessReader
 
-#clear_destination
-#send_file photo.json
-#exec_spark pcontop.ny.lab.reader.PhotoReader
+clear_destination
+send_file photo.json
+exec_spark pcontop.ny.lab.reader.PhotoReader
 
-#clear_destination
-#send_file tip.json
-#exec_spark pcontop.ny.lab.reader.TipReader
+clear_destination
+send_file tip.json
+exec_spark pcontop.ny.lab.reader.TipReader
 
-#clear_destination
-#send_file checkin.json
-#exec_spark pcontop.ny.lab.reader.CheckinReader
+clear_destination
+send_file checkin.json
+exec_spark pcontop.ny.lab.reader.CheckinReader
 
-#clear_destination
-#send_file review.json
-#exec_spark pcontop.ny.lab.reader.ReviewReader
+clear_destination
+send_file review.json
+exec_spark pcontop.ny.lab.reader.ReviewReader
 
 clear_destination
 send_file user.json

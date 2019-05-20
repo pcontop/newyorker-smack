@@ -7,16 +7,16 @@ object YelpContainerUtils {
 
   val dateFormat: DateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 
-  def toListStringOption(line:String): Option[List[String]] = line match {
-    case null => None
-    case a: String => Some(a.split(", ").toList)
+  def toListString(line:String): List[String] = line match {
+    case null => Nil
+    case a: String => a.split(", ").toList
   }
 
-  def toListTimestampOption(line:String): Option[List[Timestamp]] = line match {
-    case null => None
-    case a:String => toListStringOption(a) match {
-      case None => None
-      case Some(b) => Some(b.map(toTimestampOption).filter(_.nonEmpty).map(_.get))
+  def toListTimestamp(line:String): List[Timestamp] = line match {
+    case null => Nil
+    case a:String => toListString(a) match {
+      case Nil => Nil
+      case b => b.map(toTimestampOption).filter(_.nonEmpty).map(_.get)
     }
   }
 
